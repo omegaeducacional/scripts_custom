@@ -4,6 +4,7 @@
     // Your code here...
     setInterval(() => {
         [...document.querySelectorAll(".gl-label:not(.omg-ext-checked)")].forEach((row) => {
+            // adiciona label
             if (row.innerText.includes("::")) {
                 const parts = row.innerText.split("::");
                 const text = parts[0];
@@ -14,6 +15,13 @@
                 link.append(`<span class="gl-label-text-scoped">${scoped}</span>`);
             }
             row.classList.add("omg-ext-checked");
+            // --/ adiciona label
+
+            // ajusta texto no board (estava trazendo apenas o ultimo path)
+            [...document.querySelectorAll(".board-item-path")].forEach((row) => {
+                row.innerText = row.title.split("/").slice(-2).join("/");
+            });
+            // --/ ajusta label
         });
     }, 150);
 
