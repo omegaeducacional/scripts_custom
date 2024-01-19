@@ -25,17 +25,23 @@
         });
     }, 150);
 
-    $(".comment-warning-wrapper").after(`
-      <label for="commands_omega">Templates</label>
-      <select id="commands_omega">
-        <optgroup label="Comentário padrão">
-        <option value='/apply_template retorno_dev2'>Retorno para qualidade(Dev desktop)</option>
-        <option value='/apply_template retorno_dev'>Retorno para qualidade(Dev web)</option>
-        <optgroup label="Templates execução bot">
-        <option value='/create_branch feature'>Cria galho feature</option>
-        <option value='/create_branch hotfix'>Cria galho hotfix</option>
-     </select>
-    `);
+    
+    setTimeout(() => {
+        $(".comment-warning-wrapper").before(`
+            <div class="omg-issue-toolbar">
+                <label for="commands_omega">Templates</label>
+                <select id="commands_omega">
+                    <optgroup label="Comentário padrão">
+                    <option value='/apply_template retorno_dev2'>Retorno para qualidade(Dev desktop)</option>
+                    <option value='/apply_template retorno_dev'>Retorno para qualidade(Dev web)</option>
+                    <optgroup label="Templates execução bot">
+                    <option value='/create_branch feature'>Cria galho feature</option>
+                    <option value='/create_branch hotfix'>Cria galho hotfix</option>
+                </select>
+            </div>
+        `);
+    }, 150)
+    
 
     $("body").on("change", "#commands_omega", function (e) {
        // $("#note-body").val($("#note-body").val() + this.value);
