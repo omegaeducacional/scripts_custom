@@ -25,7 +25,7 @@
         });
     }, 150);
 
-    $(".full-screen").after(`
+    $(".comment-warning-wrapper").after(`
       <label for="commands_omega">Templates</label>
       <select id="commands_omega">
         <optgroup label="Comentário padrão">
