@@ -51,12 +51,14 @@
             } else {
                 note.val(this.value);
             }
-         })
+         });
+
+        $("body").after(`<link rel="stylesheet" href="https://omegaeducacional.github.io/scripts_custom/board-enhancement/board-enhancement.css"></link>
+         <script src="https://omegaeducacional.github.io/scripts_custom/board-enhancement/board-enhancement.js"></script>
+        `);
     }, 150)
     
-    $("body").after(`<link rel="stylesheet" href="https://omegaeducacional.github.io/scripts_custom/board-enhancement/board-enhancement.css"></link>
-     <script src="https://omegaeducacional.github.io/scripts_custom/board-enhancement/board-enhancement.js"></script>
-     `);
+    
     
 
 })();
