@@ -40,19 +40,21 @@
                 </select>
             </div>
         `);
+
+        $("body").on("change", "#commands_omega", function (e) {
+            // $("#note-body").val($("#note-body").val() + this.value);
+            const note = $("#note-body");
+            if (note.val().trim() !== "") {
+                if (confirm("Atenção, seu conteúdo será atualizado com o template, confirma?")) {
+                    note.val(this.value);
+                }
+            } else {
+                note.val(this.value);
+            }
+         })
     }, 150)
     
 
-    $("body").on("change", "#commands_omega", function (e) {
-       // $("#note-body").val($("#note-body").val() + this.value);
-       const note = $("#note-body");
-       if (note.val().trim() !== "") {
-           if (confirm("Atenção, seu conteúdo será atualizado com o template, confirma?")) {
-               note.val(this.value);
-           }
-       } else {
-           note.val(this.value);
-       }
-    })
+    
 
 })();
