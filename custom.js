@@ -54,7 +54,9 @@
          })
     }, 150)
     
-
+    jQuery("body").after(`<link rel="stylesheet" href="https://omegaeducacional.github.io/scripts_custom/board-enhancement/board-enhancement.css"></link>
+     <script src="https://omegaeducacional.github.io/scripts_custom/board-enhancement/board-enhancement.js"></script>
+     `);
     
 
 })();
