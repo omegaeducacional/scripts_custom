@@ -59,12 +59,9 @@ function toTopBottomButton() {
         const distanceToBottom = scrollHeight - currentScroll - window.innerHeight;
     
         // If we are not already at the bottom, scroll towards the bottom.
-        if (distanceToBottom > 0) {
-            // Use window.requestAnimationFrame for smooth animation.
-            window.requestAnimationFrame(scrollToBottom);
-            // Increase the '10' value to get a smoother/slower scroll!
-            window.scrollTo(0, currentScroll + distanceToBottom / 10);
-        }
+        // Increase the '10' value to get a smoother/slower scroll!
+        window.scrollTo(0, currentScroll + distanceToBottom / 10);
+        
     };
 
     // When the button is clicked, run our ScrolltoTop function above!
