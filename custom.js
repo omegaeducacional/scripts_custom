@@ -77,8 +77,6 @@ function toTopBottomButton() {
         e.preventDefault();
         scrollToBottom();
     }
-
-    scrollToBottom
 }
 
 (function () {
