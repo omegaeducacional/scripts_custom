@@ -4,7 +4,7 @@ function toTopBottomButton() {
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6"><path d="M12 6H0l6-6z"/></svg>
             <span class="screen-reader-text">Ir para o topo</span>
         </a>
-        <a class="to-bottom hide" href="">
+        <a class="to-bottom" href="">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6"><path d="M12 6H0l6-6z"/></svg>
             <span class="screen-reader-text">Ir para baixo</span>
         </a>
