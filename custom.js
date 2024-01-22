@@ -52,15 +52,7 @@ function toTopBottomButton() {
             document.body.clientHeight, document.documentElement.clientHeight
         );
     
-        // Let's set a variable for the current scroll position from the top.
-        const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-    
-        // Calculate how far we are from the bottom of the document.
-        const distanceToBottom = scrollHeight - currentScroll - window.innerHeight;
-    
-        // If we are not already at the bottom, scroll towards the bottom.
-        // Increase the '10' value to get a smoother/slower scroll!
-        window.scrollTo(0, currentScroll + distanceToBottom / 10);
+        window.scrollTo(0, scrollHeight);
         
     };
 
