@@ -6,7 +6,7 @@
 }
 
 /* Ir para o topo */
-.to-top {
+.to-top, .to-bottom {
   transition: all 0.25s ease-in-out;
   position: fixed;
   bottom: 0;
@@ -18,34 +18,42 @@
   margin: 0 1em 1em 0;
   border-radius: 50%;
   padding: 0.20em;
-  width: 50px;
-  height: 50px;
+  width: 35px;
+  height: 35px;
   background-color: #F8F8F8;
   z-index: 999999;
 }
 
-.to-top.show {
+.to-bottom {
+  margin-top: 0.5em;
+}
+
+.to-top.show, .to-bottom.show {
   visibility: visible;
   opacity: 1;
 }
 
-.to-top.hide {
+.to-top.hide, .to-bottom.hide {
   visibility: hidden;
   opacity: 0;
 }
 
-.to-top svg {
+.to-top svg, .to-bottom svg {
   fill: #000;
   width: 24px;
   height: 12px;
 }
 
-.to-top:hover {
-  background-color: #E8E8E8;
+.to-top:hover, .to-bottom:hover {
+  background-color: grey;
 }
 
-.to-top:hover svg {
-  fill: #000000;
+.to-top:hover svg, .to-bottom:hover svg {
+  fill: #fff;
+}
+
+.to-bottom svg {
+  transform: rotate(180deg)
 }
 
 .screen-reader-text {

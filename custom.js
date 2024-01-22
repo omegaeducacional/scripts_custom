@@ -1,13 +1,18 @@
-function toTopButton() {
+function toTopBottomButton() {
     $("body").append(`
-        <a class="to-top hide" href="" id="js-top">
+        <a class="to-top hide" href="">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6"><path d="M12 6H0l6-6z"/></svg>
             <span class="screen-reader-text">Ir para o topo</span>
+        </a>
+        <a class="to-bottom hide" href="">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6"><path d="M12 6H0l6-6z"/></svg>
+            <span class="screen-reader-text">Ir para baixo</span>
         </a>
     `);
 
     // Set a variable for our button element.
-    const scrollToTopButton = document.getElementById('js-top');
+    const scrollToTopButton = document.querySelector('.to-top');
+    const scrollToBottomButton = document.querySelector('.to-bottom');
 
     // Let's set up a function that shows our scroll-to-top button if we scroll beyond the height of the initial window.
     const scrollFunc = () => {
@@ -39,11 +44,41 @@ function toTopButton() {
         }
     };
 
+    const scrollToBottom = () => {
+        // Let's set a variable for the height of the entire document.
+        const scrollHeight = Math.max(
+            document.body.scrollHeight, document.documentElement.scrollHeight,
+            document.body.offsetHeight, document.documentElement.offsetHeight,
+            document.body.clientHeight, document.documentElement.clientHeight
+        );
+    
+        // Let's set a variable for the current scroll position from the top.
+        const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+    
+        // Calculate how far we are from the bottom of the document.
+        const distanceToBottom = scrollHeight - currentScroll - window.innerHeight;
+    
+        // If we are not already at the bottom, scroll towards the bottom.
+        if (distanceToBottom > 0) {
+            // Use window.requestAnimationFrame for smooth animation.
+            window.requestAnimationFrame(scrollToBottom);
+            // Increase the '10' value to get a smoother/slower scroll!
+            window.scrollTo(0, currentScroll + distanceToBottom / 10);
+        }
+    };
+
     // When the button is clicked, run our ScrolltoTop function above!
     scrollToTopButton.onclick = function (e) {
         e.preventDefault();
         scrollToTop();
     }
+
+    scrollToBottomButton.onclick = function (e) {
+        e.preventDefault();
+        scrollToBottom();
+    }
+
+    scrollToBottom
 }
 
 (function () {
@@ -102,6 +137,6 @@ function toTopButton() {
             }
         });
 
-        toTopButton();
+        toTopBottomButton();
     }, 150)
 })();
