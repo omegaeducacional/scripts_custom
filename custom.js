@@ -118,10 +118,10 @@ function toTopBottomButton() {
             const note = $("#note-body");
             if (note.val().trim() !== "") {
                 if (confirm("Atenção, seu conteúdo será atualizado com o template, confirma?")) {
-                    note.val(this.value);
+                    note.val(this.value).change();
                 }
             } else {
-                note.val(this.value);
+                note.val(this.value).change();
             }
         });
 
