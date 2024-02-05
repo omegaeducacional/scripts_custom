@@ -126,7 +126,9 @@ function toTopBottomButton() {
     }
 
     function timerIssue () {
-        $(`[data-testid="reportLink"]`).after(`
+        const element = $(`[data-testid="reportLink"]`);
+        debugger;
+        element.after(`
             <div class="container-timer">
                 <h1 id="timer">00:00:00</h1>
                 <button id="startBtn" onclick="startTimer()" class="btn btn-default btn-md">Iniciar</button>
