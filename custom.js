@@ -167,5 +167,6 @@ function toTopBottomButton() {
         commandsTemplate();
         timerIssue();
         toTopBottomButton();
+        loadBoardPlugin();
     }, 150)
 })();
