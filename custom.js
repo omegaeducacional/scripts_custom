@@ -143,7 +143,7 @@ function toTopBottomButton() {
 
     function timerIssue () {
         const element = $(`[data-testid="reportLink"]`);
-        if (!element) {
+        if (element.length === 0) {
             setTimeout(timerIssue, 100);
             return;
         }
