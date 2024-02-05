@@ -96,8 +96,7 @@ function toTopBottomButton() {
         });
     }, 150);
 
-
-    setTimeout(() => {
+    function commandsTemplate() {
         $(".comment-warning-wrapper").before(`
             <div class="omg-issue-toolbar">
                 <label for="commands_omega">Templates</label>
@@ -124,7 +123,20 @@ function toTopBottomButton() {
                 note.val(this.value).change();
             }
         });
+    }
 
+    function timerIssue () {
+        $(`[data-testid="reportLink"]`).after(`
+            <div class="container-timer">
+                <h1 id="timer">00:00:00</h1>
+                <button id="startBtn" onclick="startTimer()" class="btn btn-default btn-md">Iniciar</button>
+                <button id="stopBtn" onclick="stopTimer()" class="btn btn-default btn-md">Parar</button>
+            </div>
+        `);
+    }
+    setTimeout(() => {
+        commandsTemplate();
+        timerIssue();
         toTopBottomButton();
     }, 150)
 })();
