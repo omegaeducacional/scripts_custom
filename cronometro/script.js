@@ -25,6 +25,7 @@ function startTimer() {
         addLabel("Development");
         startTime = Date.now();
         isRunning = true;
+        accumulatedTime = 0;
         sessionStorage.setItem("isRunning", "true");
         requestAnimationFrame(updateTimer);
     }
