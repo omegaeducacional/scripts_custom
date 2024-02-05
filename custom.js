@@ -142,7 +142,7 @@ function toTopBottomButton() {
     }
 
     function timerIssue () {
-        const element = $(`[data-testid="reportLink"]`);
+        const element = $(`[data-testid="reportLink"], [data-testid="noTrackingPane"]`);
         if (element.length === 0) {
             setTimeout(timerIssue, 100);
             return;
