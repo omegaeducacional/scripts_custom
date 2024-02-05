@@ -1,3 +1,8 @@
+function addScript(url) {
+    var script = document.createElement('script');
+    script.src = url;
+    document.body.appendChild(script);
+}
 function toTopBottomButton() {
     $("body").append(`
         <a class="to-top hide" href="">
@@ -127,7 +132,13 @@ function toTopBottomButton() {
 
     function timerIssue () {
         const element = $(`[data-testid="reportLink"]`);
-        debugger;
+        if (!element) {
+            setTimeout(timerIssue, 100);
+            return;
+        }
+
+        addScript('https://omegaeducacional.github.io/scripts_custom/cronometro/script.js');
+        
         element.after(`
             <div class="container-timer">
                 <h1 id="timer">00:00:00</h1>
