@@ -102,5 +102,6 @@ function removeLabel(label) {
 function addComment(comment) {
     // Adiciona um comentário à tarefa no GitLab
     // Aqui você pode adicionar lógica específica para interagir com a API do GitLab
-    console.log(`Comentário adicionado:\n${comment}`);
+    //console.log(`Comentário adicionado:\n${comment}`);
+    $("#note-body").val(comment);
 }
