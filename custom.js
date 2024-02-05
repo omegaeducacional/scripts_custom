@@ -1,8 +1,19 @@
 function addScript(url) {
-    var script = document.createElement('script');
+    const script = document.createElement('script');
     script.src = url;
     document.body.appendChild(script);
 }
+
+function addCSS(url) {
+    const link = document.createElement('link');
+
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = url; 
+
+    document.head.appendChild(link);
+}
+
 function toTopBottomButton() {
     $("body").append(`
         <a class="to-top hide" href="">
@@ -146,6 +157,11 @@ function toTopBottomButton() {
                 <button id="stopBtn" onclick="stopTimer()" class="btn btn-default btn-md">Parar</button>
             </div>
         `);
+    }
+
+    function loadBoardPlugin () {
+        addScript("https://omegaeducacional.github.io/scripts_custom/board-enhancement/board-enhancement.js");
+        addCSS("https://omegaeducacional.github.io/scripts_custom/board-enhancement/board-enhancement.css");
     }
     setTimeout(() => {
         commandsTemplate();
