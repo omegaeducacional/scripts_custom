@@ -82,9 +82,10 @@ function generateComment(time, reason) {
     return `
 ${reason ? `Motivo: ${reason}\n` : ''}
 /spend ${spentSeconds}s
-/label ${currentLabel}
-/unlabel Development
 `;
+
+///label ${currentLabel}
+///unlabel Development
 }
 
 function addLabel(label) {
@@ -103,5 +104,5 @@ function addComment(comment) {
     // Adiciona um comentário à tarefa no GitLab
     // Aqui você pode adicionar lógica específica para interagir com a API do GitLab
     //console.log(`Comentário adicionado:\n${comment}`);
-    $("#note-body").val(comment);
+    $("#note-body").val(comment).change();
 }
