@@ -26,7 +26,9 @@ function addComment (text, check = false) {
 }
 
 function buttonCommentClick () {
-    $(`[data-track-label="comment_button"] button:eq(0)`).click();
+    setTimeout(() => {
+        $(`[data-track-label="comment_button"] button:eq(0)`).click();
+    }, 150);
 }
 
 function toTopBottomButton() {
