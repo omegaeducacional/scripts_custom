@@ -5,21 +5,25 @@ let currentLabel = "To-do"; // Inicializa com a label padrão
 
 // Carrega o tempo acumulado e o estado do cronômetro ao iniciar a página
 window.addEventListener("load", () => {
+    debugger;
     const savedTime = sessionStorage.getItem("time");
-    const isRunningSaved = sessionStorage.getItem("isRunning");
+    isRunning = sessionStorage.getItem("isRunning");
+    
+    startTime = sessionStorage.getItem("startTime") || Date.now();
 
     if (savedTime) {
         accumulatedTime = parseInt(savedTime, 10);
         document.getElementById("timer").innerText = formatTime(Math.floor(accumulatedTime / 1000));
 
         // Se o cronômetro estava em execução, reinicia
-        if (isRunningSaved === "true") {
+        if (isRunning === "true") {
             startTimer();
         }
     }
 });
 
 function startTimer() {
+    debugger;
     if (!isRunning) {
         // Adiciona a label "Development"
         addLabel("Development");
@@ -27,8 +31,10 @@ function startTimer() {
         isRunning = true;
         accumulatedTime = 0;
         sessionStorage.setItem("isRunning", "true");
-        requestAnimationFrame(updateTimer);
     }
+    requestAnimationFrame(updateTimer);
+    $("#startBtn").prop("disabled", true);
+    $("#stopBtn").prop("disabled", false);
 }
 
 function stopTimer() {
@@ -53,6 +59,8 @@ function stopTimer() {
         sessionStorage.setItem("isRunning", "false");
         sessionStorage.setItem("time", 0);
         document.getElementById("timer").innerText = "00:00:00";
+        $("#startBtn").prop("disabled", false);
+        $("#stopBtn").prop("disabled", true);
     }
 }
 
