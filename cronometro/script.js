@@ -7,7 +7,7 @@ let currentLabel = "To-do"; // Inicializa com a label padrão
 window.addEventListener("load", () => {
     debugger;
     const savedTime = sessionStorage.getItem("time");
-    isRunning = sessionStorage.getItem("isRunning");
+    isRunning = sessionStorage.getItem("isRunning") === "true";
     
     startTime = sessionStorage.getItem("startTime") || Date.now();
 
@@ -16,7 +16,7 @@ window.addEventListener("load", () => {
         document.getElementById("timer").innerText = formatTime(Math.floor(accumulatedTime / 1000));
 
         // Se o cronômetro estava em execução, reinicia
-        if (isRunning === "true") {
+        if (isRunning) {
             startTimer();
         }
     }
