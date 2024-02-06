@@ -3,25 +3,6 @@ let isRunning = false;
 let accumulatedTime = 0;
 let currentLabel = "To-do"; // Inicializa com a label padrão
 
-// Carrega o tempo acumulado e o estado do cronômetro ao iniciar a página
-window.addEventListener("load", () => {
-    debugger;
-    const savedTime = sessionStorage.getItem("time");
-    isRunning = sessionStorage.getItem("isRunning") === "true";
-    
-    startTime = sessionStorage.getItem("startTime") || Date.now();
-
-    if (savedTime) {
-        accumulatedTime = parseInt(savedTime, 10);
-        document.getElementById("timer").innerText = formatTime(Math.floor(accumulatedTime / 1000));
-
-        // Se o cronômetro estava em execução, reinicia
-        if (isRunning) {
-            startTimer();
-        }
-    }
-});
-
 function startTimer() {
     debugger;
     if (!isRunning) {
@@ -106,3 +87,20 @@ function removeLabel(label) {
     addComment(`/unlabel ~"${label}"`);
     buttonCommentClick();
 }
+
+(() => {
+    const savedTime = sessionStorage.getItem("time");
+    isRunning = sessionStorage.getItem("isRunning") === "true";
+    
+    startTime = sessionStorage.getItem("startTime") || Date.now();
+
+    if (savedTime) {
+        accumulatedTime = parseInt(savedTime, 10);
+        document.getElementById("timer").innerText = formatTime(Math.floor(accumulatedTime / 1000));
+
+        // Se o cronômetro estava em execução, reinicia
+        if (isRunning) {
+            startTimer();
+        }
+    }
+})();
