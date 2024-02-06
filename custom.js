@@ -14,6 +14,21 @@ function addCSS(url) {
     document.head.appendChild(link);
 }
 
+function addComment (text, check = false) {
+    const note = $("#note-body");
+    if (note.val().trim() !== "" && check) {
+        if (confirm("Atenção, a caixa de comentário tem texto informado e será substituida, confirma?")) {
+            note.val(text).change();
+        }
+    } else {
+        note.val(text).change();
+    }
+}
+
+function buttonCommentClick () {
+    $(`[data-track-label="comment_button"] button:eq(0)`).click();
+}
+
 function toTopBottomButton() {
     $("body").append(`
         <a class="to-top hide" href="">
@@ -129,15 +144,7 @@ function toTopBottomButton() {
         `);
 
         $("body").on("change", "#commands_omega", function (e) {
-            // $("#note-body").val($("#note-body").val() + this.value);
-            const note = $("#note-body");
-            if (note.val().trim() !== "") {
-                if (confirm("Atenção, seu conteúdo será atualizado com o template, confirma?")) {
-                    note.val(this.value).change();
-                }
-            } else {
-                note.val(this.value).change();
-            }
+            addComment(this.value, true);
         });
     }
 
