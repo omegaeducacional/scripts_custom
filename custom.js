@@ -23,7 +23,7 @@ function substituirLinks(texto) {
 }
 
 function extrairIdDaUrl(url) {
-    const match = url.match(/\/Ticket\/Edit\/(\d+)/);
+    const match = url.match(/\/Ticket\/(?:Create|Edit)\/(\d+)/);
     return match ? match[1] : null;
 }
 
