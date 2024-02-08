@@ -11,8 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
         alert("Token informado é inválido");
         return;
     }
-    const apiUrl = `https://api.movidesk.com/public/v1/tickets?token=${token}&id=${requestId || ''}`;
-    
+    const apiUrl = `https://corsproxy.io/?${encodeURIComponent(`https://api.movidesk.com/public/v1/tickets?token=${token}&id=${requestId || ''}`)}`;   
 
     // Função para fazer a requisição à API usando Axios
     function fetchTicketDetails() {
