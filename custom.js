@@ -24,8 +24,8 @@ function substituirLinks(texto) {
 
 function abrirPopup(id) {
     const url = `https://omegaeducacional.github.io/scripts_custom/tickets/?id=${id}&token=649048bd-ae76-4ee6-b496-478eddbb4d30`;
-    const largura = 600;
-    const altura = 400;
+    const largura = 1200;
+    const altura = 900;
 
     // Calcula o posicionamento centralizado
     const esquerda = (window.innerWidth - largura) / 2;
@@ -205,7 +205,7 @@ function toTopBottomButton() {
     }
 
     function changeTicketLinks () {
-        const element = $(".issue-details");
+        const element = $('[data-testid="issue-title"]');
         if (element.length !== 0) {
             element.html(substituirLinks(element.html()))
         }
