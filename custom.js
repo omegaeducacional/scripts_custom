@@ -13,13 +13,26 @@ function substituirLinks(texto) {
 
     // Função de substituição que gera o link com o ID extraído
     function substituir(match, id) {
-        return `<a href="https://omegaeducacional.github.io/scripts_custom/tickets/?id=${id}&token=${window.TKT_TK}" target="_blank">${match}</a>`;
+        return `<a href="#" onclick="abrirPopup(${id}); return false;">${match}</a>`;
     }
 
     // Executa a substituição no texto
     const resultado = texto.replace(regex, substituir);
 
     return resultado;
+}
+
+function abrirPopup(id) {
+    const url = `https://omegaeducacional.github.io/scripts_custom/tickets/?id=${id}&token=649048bd-ae76-4ee6-b496-478eddbb4d30`;
+    const largura = 600;
+    const altura = 400;
+
+    // Calcula o posicionamento centralizado
+    const esquerda = (window.innerWidth - largura) / 2;
+    const topo = (window.innerHeight - altura) / 2;
+
+    // Abre o popup
+    window.open(url, 'popup', `width=${largura},height=${altura},left=${esquerda},top=${topo}`);
 }
 
 function addCSS(url) {
