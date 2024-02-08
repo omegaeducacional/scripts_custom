@@ -22,8 +22,22 @@ function substituirLinks(texto) {
     return resultado;
 }
 
+function extrairIdDaUrl(url) {
+    const match = url.match(/\/Ticket\/Edit\/(\d+)/);
+    return match ? match[1] : null;
+}
+
 function abrirPopup(id) {
-    const url = `https://omegaeducacional.github.io/scripts_custom/tickets/?id=${id}&token=649048bd-ae76-4ee6-b496-478eddbb4d30`;
+    // Verifica se o ID é uma URL
+    const isUrl = id.startsWith('http');
+
+    // Extrai o ID da URL, se for o caso
+    const extractedId = isUrl ? extrairIdDaUrl(id) : id;
+    if (!extractedId) {
+        alert('ID inválido ou formato de URL não reconhecido.');
+        return;
+    }
+    const url = `https://omegaeducacional.github.io/scripts_custom/tickets/?id=${extractedId}&token=${window.TKT_TK}`;
     const largura = 1200;
     const altura = 900;
 
@@ -210,6 +224,13 @@ function toTopBottomButton() {
         if (element.length !== 0) {
             element.html(substituirLinks(element.html()))
         }
+
+        $(".openTicket").on("click", () => {
+            const id = window.prompt("Por favor, insira a URL ou o ID do ticket:");
+            if (id) {
+                abrirPopup(id);
+            }
+        })
     }
     setTimeout(() => {
         commandsTemplate();
