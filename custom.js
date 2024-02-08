@@ -13,7 +13,7 @@ function substituirLinks(texto) {
 
     // Função de substituição que gera o link com o ID extraído
     function substituir(match, id) {
-        return `<a href="#" onclick="abrirPopup(${id}); return false;">${match}</a>`;
+        return `<a href="#" onclick="abrirPopup(${id}); return false;">🔗 ${match}</a>`;
     }
 
     // Executa a substituição no texto
