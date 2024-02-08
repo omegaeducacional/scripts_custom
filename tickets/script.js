@@ -1,18 +1,23 @@
 document.addEventListener('DOMContentLoaded', function () {
     const urlSearchParams = new URLSearchParams(window.location.search);
     const requestId = urlSearchParams.get('id');
+    const token = urlSearchParams.get('token');
+    
     if (!requestId) {
         alert("Não foi informado nenhum id");
         return;
     }
-    const apiUrl = `https://cors-proxy.fringe.zone/https://api.movidesk.com/public/v1/tickets?token=649048bd-ae76-4ee6-b496-478eddbb4d30&id=${requestId || ''}`;
+    if (!token) {
+        alert("Token informado é inválido");
+        return;
+    }
+    const apiUrl = `https://api.movidesk.com/public/v1/tickets?token=${token}&id=${requestId || ''}`;
     
 
     // Função para fazer a requisição à API usando Axios
     function fetchTicketDetails() {
         axios.get(apiUrl)
             .then(response => {
-                
                 const ticket = response.data;
 
                 // Preencher dinamicamente os detalhes do ticket no HTML
@@ -29,8 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 
                 // Preencher dinamicamente os detalhes do ticket no HTML
                 fillTicketDetails(ticket);
-                
-                document.getElementById('loading-message').style.display = 'none';
+                document.getElementById('loading-message').style.display = 'none'; 
             })
             .catch(error => console.error('Erro ao buscar detalhes do ticket:', error));
     }
@@ -64,8 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Cria um novo elemento para cada descrição
                 const descriptionItem = document.createElement('div');
                 descriptionItem.innerHTML = htmlDescription;
-                descriptionItem.style.borderBottom = "1px dashed #000";
-    
+                descriptionItem.className = "card card-body mb-2 mt-2";
                 // Adiciona o novo elemento à descrição
                 descriptionElement.appendChild(descriptionItem);
             });
@@ -80,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <!-- Loop através dos anexos e exibição de imagens -->
             ${ticket.actions[0].attachments.map(attachment => `
                 <a href="https://s3.amazonaws.com/movidesk-files/${attachment.path}" target="_blank">${attachment.fileName}</a>
-            `).join('')}
+            `).join('') || "Sem anexos"}
         `;
     }
 
@@ -106,9 +109,9 @@ document.addEventListener('DOMContentLoaded', function () {
             ${ticket.statusHistories.map(history => `
                 <tr>
                     <td>${history.status}</td>
-                    <td>${history.justification}</td>
+                    <td>${history.justification || "-"}</td>
                     <td>${history.changedBy.businessName}</td>
-                    <td>${history.changedDate}</td>
+                    <td>${new Date(history.changedDate).toLocaleString()}</td>
                 </tr>
             `).join('')}
         `;
