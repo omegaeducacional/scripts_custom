@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function fetchTicketDetails() {
         axios.get(apiUrl)
             .then(response => {
+                
                 const ticket = response.data;
 
                 // Preencher dinamicamente os detalhes do ticket no HTML
@@ -28,6 +29,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 
                 // Preencher dinamicamente os detalhes do ticket no HTML
                 fillTicketDetails(ticket);
+                
+                document.getElementById('loading-message').style.display = 'none';
             })
             .catch(error => console.error('Erro ao buscar detalhes do ticket:', error));
     }
