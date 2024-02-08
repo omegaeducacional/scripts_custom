@@ -1,7 +1,25 @@
+// GLOBAL
+window.TKT_TK = '649048bd-ae76-4ee6-b496-478eddbb4d30';
+
 function addScript(url) {
     const script = document.createElement('script');
     script.src = url;
     document.body.appendChild(script);
+}
+
+function substituirLinks(texto) {
+    // Expressão regular para encontrar o padrão [TK X]
+    const regex = /\[TK (\d+)\]/g;
+
+    // Função de substituição que gera o link com o ID extraído
+    function substituir(match, id) {
+        return `<a href="https://omegaeducacional.github.io/scripts_custom/tickets/?id=${id}&token=${window.TKT_TK}" target="_blank">${match}</a>`;
+    }
+
+    // Executa a substituição no texto
+    const resultado = texto.replace(regex, substituir);
+
+    return resultado;
 }
 
 function addCSS(url) {
@@ -172,10 +190,18 @@ function toTopBottomButton() {
         addScript("https://omegaeducacional.github.io/scripts_custom/board-enhancement/board-enhancement.js");
         addCSS("https://omegaeducacional.github.io/scripts_custom/board-enhancement/board-enhancement.css");
     }
+
+    function changeTicketLinks () {
+        const element = $(".issue-details");
+        if (element.length !== 0) {
+            element.html(substituirLinks(element.html()))
+        }
+    }
     setTimeout(() => {
         commandsTemplate();
         timerIssue();
         toTopBottomButton();
         loadBoardPlugin();
+        changeTicketLinks();
     }, 150)
 })();
