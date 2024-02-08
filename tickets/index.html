@@ -86,18 +86,28 @@
         }
 
         #loading-message {
-            font-size: 18px;
+            font-size: 3rem;
             font-weight: bold;
             text-align: center;
             margin-top: 20px;
+            position: fixed;
+            background: rgb(169 169 169 / 78%);
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .loading-spinner {
             border: 4px solid rgba(0, 0, 0, 0.1);
             border-top: 4px solid #3498db;
             border-radius: 50%;
-            width: 30px;
-            height: 30px;
+            width: 60px;
+            height: 60px;
             animation: spin 1s linear infinite;
             margin: 20px auto;
         }
@@ -111,8 +121,10 @@
 
 <body>
     <div id="loading-message">
-        <div class="loading-spinner"></div>
-        Carregando...
+        <div>
+            <div class="loading-spinner"></div>
+            Carregando...
+        </div>
     </div>
     <header>
         <h1>Detalhes do Ticket Movidesk</h1>
