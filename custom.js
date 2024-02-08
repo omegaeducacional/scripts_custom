@@ -72,6 +72,7 @@ function toTopBottomButton() {
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6"><path d="M12 6H0l6-6z"/></svg>
             <span class="screen-reader-text">Ir para baixo</span>
         </a>
+        <img src="https://www.movidesk.com/assets/pt-br/img/logo-movidesk-zenvia.svg" class="img-fluid" width="205" height="55" alt="Movidesk" class="openTicket">
     `);
 
     // Set a variable for our button element.
