@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
         alert("Não foi informado nenhum id");
         return;
     }
-    const apiUrl = `https://cors-anywhere.herokuapp.com/https://api.movidesk.com/public/v1/tickets?token=649048bd-ae76-4ee6-b496-478eddbb4d30&id=${requestId || ''}`;
+    const apiUrl = `https://cors-proxy.fringe.zone/https://api.movidesk.com/public/v1/tickets?token=649048bd-ae76-4ee6-b496-478eddbb4d30&id=${requestId || ''}`;
     
 
     // Função para fazer a requisição à API usando Axios
