@@ -29,7 +29,7 @@ function extrairIdDaUrl(url) {
 
 function abrirPopup(id) {
     // Verifica se o ID é uma URL
-    const isUrl = id.startsWith('http');
+    const isUrl = String(id).startsWith('http');
 
     // Extrai o ID da URL, se for o caso
     const extractedId = isUrl ? extrairIdDaUrl(id) : id;
