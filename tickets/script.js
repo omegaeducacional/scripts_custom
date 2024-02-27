@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
         alert("Token informado é inválido");
         return;
     }
-    const apiUrl = `https://corsproxy.io/?${encodeURIComponent(`https://api.movidesk.com/public/v1/tickets?token=${token}&id=${requestId || ''}`)}`;
+    const apiUrl = `https://corsproxy.io/?${encodeURIComponent(`https://api.movidesk.com/public/v1/tickets?token=${token}&id=${requestId || ''}&now=${new Date().getTime()}`)}`;
     
 
     // Função para fazer a requisição à API usando Axios
@@ -32,26 +32,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Preencher dinamicamente o histórico de status do ticket no HTML
                 fillStatusHistory(ticket);
                 
-                // Preencher dinamicamente os detalhes do ticket no HTML
-                fillTicketDetails(ticket);
                 document.getElementById('loading-message').style.display = 'none'; 
             })
             .catch(error => console.error('Erro ao buscar detalhes do ticket:', error));
     }
 
-    // Função para preencher dinamicamente os detalhes do ticket no HTML
-    function fillTicketDetails(ticket) {
-        const ticketDetailsTable = document.getElementById('ticketDetails');
-        ticketDetailsTable.innerHTML = `
-            <tr>
-                <th>ID</th>
-                <td>${ticket.id}</td>
-            </tr>
-            <tr>
-                <th>Assunto</th>
-                <td>${ticket.subject}</td>
-            </tr>
-        `;
+    function formatDate (date) {
+        return new Date(date).toLocaleString().replace(",", " ")
     }
 
     function fillDescription(ticket) {
@@ -60,15 +47,21 @@ document.addEventListener('DOMContentLoaded', function () {
         if (ticket.actions && ticket.actions.length > 0) {
             // Limpa o conteúdo anterior
             descriptionElement.innerHTML = '';
-    
             // Loop através de todas as ações
-            ticket.actions.forEach(action => {
+            ticket.actions.sort((a, b) => b.id - a.id).forEach(action => {
                 const htmlDescription = action.htmlDescription;
     
                 // Cria um novo elemento para cada descrição
                 const descriptionItem = document.createElement('div');
-                descriptionItem.innerHTML = htmlDescription;
-                descriptionItem.className = "card card-body mb-2 mt-2";
+                // descriptionItem.innerHTML = htmlDescription;
+                descriptionItem.innerHTML = `
+                    <div class="card-header d-flex justify-content-between">
+                        <b>${action.createdBy?.businessName}</b>
+                        <small><small>${formatDate(action.createdDate)}</small></small>
+                    </div>
+                    <div class="card-body">${htmlDescription}</div>
+                `;
+                descriptionItem.className = "card mb-2 mt-2";
                 // Adiciona o novo elemento à descrição
                 descriptionElement.appendChild(descriptionItem);
             });
@@ -79,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function fillAttachments(ticket) {
         const attachmentsSection = document.getElementById('attachmentsSection');
         attachmentsSection.innerHTML = `
-            <h2>Anexos</h2>
+            <h4 class="text-danger">Anexos</h4>
             <!-- Loop através dos anexos e exibição de imagens -->
             ${ticket.actions[0].attachments.map(attachment => `
                 <a href="https://s3.amazonaws.com/movidesk-files/${attachment.path}" target="_blank">${attachment.fileName}</a>
@@ -91,8 +84,13 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('ticket-category').innerText = ticket.category;
         document.getElementById('ticket-urgency').innerText = ticket.urgency;
         document.getElementById('ticket-status').innerText = ticket.status;
-        document.getElementById('ticket-justification').innerText = ticket.justification;
-        document.getElementById('ticket-created-date').innerText = new Date(ticket.createdDate).toLocaleString();
+        document.getElementById('ticket-responsible').innerText = ticket.owner?.businessName;
+        document.getElementById('ticket-service').innerText = ticket.serviceFirstLevel;
+        document.getElementById('ticket-created-date').innerText = formatDate(ticket.createdDate);
+        document.getElementById('ticket-clientName').innerText = ticket.clients[0]?.organization.businessName;
+        document.getElementById('ticket-clientUserName').innerText = ticket.clients[0]?.businessName;
+        document.getElementById('ticket-id').innerText = ticket.id;
+        document.getElementById('ticket-subject').innerText = ticket.subject;
     }
 
     // Função para preencher dinamicamente o histórico de status do ticket no HTML
@@ -111,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <td>${history.status}</td>
                     <td>${history.justification || "-"}</td>
                     <td>${history.changedBy?.businessName}</td>
-                    <td>${new Date(history.changedDate).toLocaleString()}</td>
+                    <td>${formatDate(history.changedDate)}</td>
                 </tr>
             `).join('')}
         `;
