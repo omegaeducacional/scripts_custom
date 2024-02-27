@@ -77,17 +77,43 @@
 
     <section class="container mt-4">
         <div class="card card-body">
-            <h2>Informações do Ticket</h2>
+            <h3><span id="ticket-id"></span> - <span id="ticket-subject"></span></h3>
+            <h4 class="text-danger">Informações do Ticket</h4>
+            
             <table class="table table-bordered">
+                <tr>
+                    <td colspan="2">
+                        <strong>Cliente:</strong> <span id="ticket-clientName"></span>
+                    </td>
+                    <td colspan="2">
+                        <strong>Usuário:</strong> <span id="ticket-clientUserName"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Categoria:</strong> <span id="ticket-category"></span>
+                    </td>
+                    <td>
+                        <strong>Serviço:</strong> <span id="ticket-service"></span>
+                    </td>
+                    <td>
+                        <strong>Urgência:</strong> <span id="ticket-urgency"></span>
+                    </td>
+                    
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Status:</strong> <span id="ticket-status"></span>
+                    </td>
+                    <td >
+                        <strong>Responsável:</strong> <span id="ticket-responsible"></span>
+                    </td> 
+                    <td>
+                        <strong>Data de Criação:</strong> <span id="ticket-created-date"></span>
+                    </td> 
+                </tr>
                 <!-- Dados do ticket serão preenchidos dinamicamente aqui -->
             </table>
-            <ul class="list-unstyled">
-                <li><strong>Categoria:</strong> <span id="ticket-category"></span></li>
-                <li><strong>Urgência:</strong> <span id="ticket-urgency"></span></li>
-                <li><strong>Status:</strong> <span id="ticket-status"></span></li>
-                <li><strong>Responsável:</strong> <span id="ticket-justification"></span></li>
-                <li><strong>Data de Criação:</strong> <span id="ticket-created-date"></span></li>
-            </ul>
         </div>
 
         <div class="description" id="description">
@@ -102,7 +128,7 @@
         </div>
 
         <div class="status-history  card card-body mt-2" id="statusHistorySection">
-            <h2>Histórico de Status</h2>
+            <h4 class="text-danger">Histórico de Status</h4>
             <table class="table table-bordered" id="statusHistoryTable">
                 <!-- Histórico de status do ticket será preenchido dinamicamente aqui -->
             </table>
