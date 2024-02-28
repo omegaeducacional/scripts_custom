@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('ticket-responsible').innerText = ticket.owner?.businessName;
         document.getElementById('ticket-service').innerText = ticket.serviceFirstLevel;
         document.getElementById('ticket-created-date').innerText = formatDate(ticket.createdDate);
-        document.getElementById('ticket-clientName').innerText = ticket.clients[0]?.organization.businessName;
+        document.getElementById('ticket-clientName').innerText = ticket.clients[0]?.organization?.businessName;
         document.getElementById('ticket-clientUserName').innerText = ticket.clients[0]?.businessName;
         document.getElementById('ticket-id').innerText = ticket.id;
         document.getElementById('ticket-subject').innerText = ticket.subject;
