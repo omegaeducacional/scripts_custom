@@ -234,7 +234,7 @@ function toTopBottomButton() {
     }
     setTimeout(() => {
         commandsTemplate();
-        timerIssue();
+        //timerIssue();
         toTopBottomButton();
         loadBoardPlugin();
         changeTicketLinks();
