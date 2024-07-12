@@ -265,6 +265,7 @@ function toTopBottomButton() {
         
         // Adiciona filtro por label, se fornecido
         if (label) {
+            label = "Sprint::" + label.padStart(2, "0");
             url += `?labels=${encodeURIComponent(label)}`;
         }
         while (url) {
@@ -392,9 +393,6 @@ function toTopBottomButton() {
         const defaultFileName = (document.querySelector('.home-panel-title')?.textContent.trim() || 'issues').replace(/Gerar CSV/i, '').trim();
         const fileName = prompt('Digite o nome do arquivo CSV:', defaultFileName) || defaultFileName;
     
-        // Construindo a URL da API
-        let apiUrl = `${GITLAB_URL}/api/v4/projects/${PROJECT_ID}/issues`;
-        
         try {
           const issues = await getAllIssues(label);
           const csv = jsonToCsv(issues);
@@ -442,7 +440,7 @@ function toTopBottomButton() {
         e.preventDefault();
         
         // Perguntar pelo label da sprint
-        const label = prompt('Digite o número da sprint (ex: 4) para filtrar as labels que contenham a sprint por exemplo "Sprint::4" ou deixe em branco para todas');
+        const label = prompt('Digite o número da sprint (ex: 4) para filtrar as labels que contenham a sprint por exemplo "Sprint::04" ou deixe em branco para todas');
         exportIssuesToCsv(label.trim());
       });
     });
