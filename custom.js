@@ -232,11 +232,211 @@ function toTopBottomButton() {
             }
         })
     }
+
+  const exportCSV = (async () => {
+      const GITLAB_URL = window.location.origin;
+    
+      // Extrair o ID do projeto do DOM e garantir que seja apenas numérico
+      const PROJECT_ID_ELEMENT = document.querySelector('[data-testid="project-id-content"]');
+      if (!PROJECT_ID_ELEMENT) {
+        console.error('Erro: Não foi possível encontrar o elemento com data-testid="project-id-content"');
+        return;
+      }
+      const PROJECT_ID_TEXT = PROJECT_ID_ELEMENT.textContent.trim();
+      const PROJECT_ID = PROJECT_ID_TEXT.match(/\d+/)[0];
+    
+      // Função para obter todas as issues
+      const headers = new Headers({
+        'Content-Type': 'application/json'
+      });
+    
+      async function getAllIssues(url) {
+        let issues = [];
+        while (url) {
+          const response = await fetch(url, { headers });
+          if (!response.ok) {
+            throw new Error(`Erro ao acessar a API: ${response.status}`);
+          }
+          const data = await response.json();
+          issues = issues.concat(data);
+          // Verificando se há uma próxima página
+          const linkHeader = response.headers.get('link');
+          const nextLink = linkHeader && linkHeader.match(/<([^>]+)>;\s*rel="next"/);
+          url = nextLink ? nextLink[1] : null;
+        }
+        return issues;
+      }
+    
+      // Função para converter JSON para CSV com colunas específicas mapeadas
+      function jsonToCsv(json) {
+        const csvRows = [];
+    
+        // Mapeamento das colunas
+        json.forEach(issue => {
+          const row = {
+            issue: issue.iid,
+            cadastro: issue.created_at,
+            conclusao: issue.closed_at,
+            titulo: issue.title,
+            Status: getStatus(issue.labels),
+            aberto: issue.state === 'opened' ? 'sim' : 'não',
+            sprint: getSprintNumber(issue.labels),
+            autor: issue.author ? issue.author.name : '',
+            atribuido: issue.assignee ? issue.assignee.name : '',
+            tester: getTesterName(issue.labels)
+          };
+          
+          // Transforma objeto em array ordenado para gerar CSV
+          const values = [
+            row.issue,
+            row.cadastro,
+            row.conclusao,
+            row.titulo,
+            row.Status,
+            row.aberto,
+            row.sprint,
+            row.autor,
+            row.atribuido,
+            row.tester
+          ];
+    
+          // Converte valores em string CSV com aspas
+          const csvRow = values.map(value => {
+            if (value === null || value === undefined) {
+              return '""'; // Retorna uma string vazia com aspas
+            }
+            return `"${value.toString().replace(/"/g, '""')}"`; // Escape double quotes
+          }).join(',');
+          
+          csvRows.push(csvRow);
+        });
+    
+        // Adiciona cabeçalho com nome de colunas
+        const header = [
+          'issue',
+          'cadastro',
+          'conclusao',
+          'titulo',
+          'Status',
+          'aberto',
+          'sprint',
+          'autor',
+          'atribuido',
+          'tester'
+        ].join(',');
+        csvRows.unshift(header);
+    
+        return csvRows.join('\r\n');
+      }
+    
+      // Função para obter o status com base nas labels específicas
+      function getStatus(labels) {
+        const statusMap = {
+          'To do': 'Aguardando',
+          'Development': 'Em desenvolvimento',
+          'Test analysis': 'Aguardando Teste Analista',
+          'Test quality': 'Aguardando Teste Qualidade',
+          'Test': 'Teste',
+          'Done': 'Concluído'
+        };
+    
+        for (let label of labels) {
+          if (statusMap.hasOwnProperty(label)) {
+            return statusMap[label];
+          }
+        }
+        return ''; // Retorna vazio se nenhum status válido for encontrado
+      }
+    
+      // Função para obter o número da sprint a partir da label
+      function getSprintNumber(labels) {
+        const sprintRegex = /^Sprint::(\d+)$/;
+        for (let label of labels) {
+          const match = label.match(sprintRegex);
+          if (match) {
+            return match[1]; // Retorna o número da sprint encontrado
+          }
+        }
+        return ''; // Retorna vazio se nenhuma label de sprint for encontrada
+      }
+    
+      // Função para obter o nome do tester a partir das labels
+      function getTesterName(labels) {
+        const testerRegex = /^Test::(.+)$/;
+        for (let label of labels) {
+          const match = label.match(testerRegex);
+          if (match) {
+            return match[1]; // Retorna o nome do tester encontrado
+          }
+        }
+        return ''; // Retorna vazio se nenhum nome de tester for encontrado
+      }
+    
+      // Função para exportar issues para CSV
+      async function exportIssuesToCsv() {
+        const defaultFileName = (document.querySelector('.home-panel-title')?.textContent.trim() || 'issues').replace(/CSV/i, '').trim();
+        const fileName = prompt('Digite o nome do arquivo CSV:', defaultFileName) || defaultFileName;
+    
+        // Construindo a URL da API
+        let apiUrl = `${GITLAB_URL}/api/v4/projects/${PROJECT_ID}/issues`;
+        console.log(apiUrl);
+    
+        try {
+          const issues = await getAllIssues(apiUrl);
+          const csv = jsonToCsv(issues);
+    
+          // Adiciona BOM para garantir que a codificação esteja correta
+          const bom = '\uFEFF';
+          const csvWithBom = bom + csv;
+    
+          // Criar um link para download do arquivo CSV
+          const blob = new Blob([csvWithBom], { type: 'text/csv;charset=utf-8;' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `${fileName}.csv`;
+          a.click();
+          URL.revokeObjectURL(url);
+    
+          console.log(`Exportado ${issues.length} issues para '${fileName}.csv'`);
+        } catch (error) {
+          console.error('Erro:', error);
+        }
+      }
+    
+      // Criar e adicionar o botão ao DOM
+      const exportButton = document.createElement('a');
+      exportButton.title = 'Exportar CSV';
+      exportButton.dataset.toggle = 'tooltip';
+      exportButton.dataset.placement = 'top';
+      exportButton.dataset.container = 'body';
+      exportButton.className = 'gl-button btn btn-icon btn-md btn-default';
+      exportButton.href = '#';
+      exportButton.style.marginLeft = '5px';
+      exportButton.textContent = 'CSV';
+    
+      const referenceElement = document.querySelector('.home-panel-title');
+      if (referenceElement) {
+        referenceElement.appendChild(exportButton);
+      } else {
+        console.error('Erro: Não foi possível encontrar o elemento de referência com a classe "home-panel-title"');
+        return;
+      }
+    
+      // Adicionar evento de clique ao botão para exportar issues
+      exportButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        exportIssuesToCsv();
+      });
+    });
+
+    
     setTimeout(() => {
         commandsTemplate();
         //timerIssue();
         toTopBottomButton();
         loadBoardPlugin();
         changeTicketLinks();
+        exportCSV();
     }, 150)
 })();
