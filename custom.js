@@ -389,7 +389,7 @@ function toTopBottomButton() {
     
       // Função para exportar issues para CSV
       async function exportIssuesToCsv(label) {
-        const defaultFileName = (document.querySelector('.home-panel-title')?.textContent.trim() || 'issues').replace(/CSV/i, '').trim();
+        const defaultFileName = (document.querySelector('.home-panel-title')?.textContent.trim() || 'issues').replace(/Gerar CSV/i, '').trim();
         const fileName = prompt('Digite o nome do arquivo CSV:', defaultFileName) || defaultFileName;
     
         // Construindo a URL da API
