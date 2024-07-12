@@ -357,7 +357,7 @@ function toTopBottomButton() {
         for (let label of labels) {
           const match = label.match(sprintRegex);
           if (match) {
-            return match[1]; // Retorna o número da sprint encontrado
+            return "Sprint " + match[1]; // Retorna o número da sprint encontrado
           }
         }
         return ''; // Retorna vazio se nenhuma label de sprint for encontrada
