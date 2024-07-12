@@ -259,8 +259,14 @@ function toTopBottomButton() {
         'Content-Type': 'application/json'
       });
     
-      async function getAllIssues(url) {
+      async function getAllIssues(label) {
         let issues = [];
+        let url = `${GITLAB_URL}/api/v4/projects/${PROJECT_ID}/issues`;
+        
+        // Adiciona filtro por label, se fornecido
+        if (label) {
+            url += `?labels=${encodeURIComponent(label)}`;
+        }
         while (url) {
           const response = await fetch(url, { headers });
           if (!response.ok) {
@@ -382,16 +388,15 @@ function toTopBottomButton() {
       }
     
       // Função para exportar issues para CSV
-      async function exportIssuesToCsv() {
+      async function exportIssuesToCsv(label) {
         const defaultFileName = (document.querySelector('.home-panel-title')?.textContent.trim() || 'issues').replace(/CSV/i, '').trim();
         const fileName = prompt('Digite o nome do arquivo CSV:', defaultFileName) || defaultFileName;
     
         // Construindo a URL da API
         let apiUrl = `${GITLAB_URL}/api/v4/projects/${PROJECT_ID}/issues`;
-        console.log(apiUrl);
-    
+        
         try {
-          const issues = await getAllIssues(apiUrl);
+          const issues = await getAllIssues(label);
           const csv = jsonToCsv(issues);
     
           // Adiciona BOM para garantir que a codificação esteja correta
@@ -415,14 +420,14 @@ function toTopBottomButton() {
     
       // Criar e adicionar o botão ao DOM
       const exportButton = document.createElement('a');
-      exportButton.title = 'Exportar CSV';
+      exportButton.title = 'Gera o CSV de todas ISSUES deste projeto';
       exportButton.dataset.toggle = 'tooltip';
       exportButton.dataset.placement = 'top';
       exportButton.dataset.container = 'body';
-      exportButton.className = 'gl-button btn btn-icon btn-md btn-default';
+      exportButton.className = 'gl-button btn btn-info';
       exportButton.href = '#';
       exportButton.style.marginLeft = '5px';
-      exportButton.textContent = 'CSV';
+      exportButton.textContent = 'Gerar CSV';
     
       const referenceElement = document.querySelector('.home-panel-title');
       if (referenceElement) {
@@ -435,7 +440,10 @@ function toTopBottomButton() {
       // Adicionar evento de clique ao botão para exportar issues
       exportButton.addEventListener('click', (e) => {
         e.preventDefault();
-        exportIssuesToCsv();
+        
+        // Perguntar pelo label da sprint
+        const label = prompt('Digite o número da sprint (ex: 4) para filtrar as labels que contenham a sprint por exemplo "Sprint::4" ou deixe em branco para todas');
+        exportIssuesToCsv(label.trim());
       });
     });
 
