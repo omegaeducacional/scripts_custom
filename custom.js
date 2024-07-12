@@ -226,6 +226,9 @@ function toTopBottomButton() {
     }
 
     function changeTicketLinks () {
+        if (window.$ === undefined) {
+            return;
+        }
         const element = $('[data-testid="issue-title"]');
         if (element.length !== 0) {
             element.html(substituirLinks(element.html()))
