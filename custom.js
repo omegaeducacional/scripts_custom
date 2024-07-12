@@ -422,7 +422,7 @@ function toTopBottomButton() {
       exportButton.dataset.toggle = 'tooltip';
       exportButton.dataset.placement = 'top';
       exportButton.dataset.container = 'body';
-      exportButton.className = 'gl-button btn btn-info';
+      exportButton.className = 'gl-button btn btn-success';
       exportButton.href = '#';
       exportButton.style.marginLeft = '5px';
       exportButton.textContent = 'Gerar CSV';
