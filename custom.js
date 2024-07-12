@@ -176,6 +176,9 @@ function toTopBottomButton() {
     }, 150);
 
     function commandsTemplate() {
+        if (window.$ === undefined) {
+            return;
+        }
         $(".comment-warning-wrapper").before(`
             <div class="omg-issue-toolbar">
                 <label for="commands_omega">Templates</label>
