@@ -11,7 +11,8 @@ document.addEventListener('DOMContentLoaded', function () {
         alert("Token informado é inválido");
         return;
     }
-    const apiUrl = `https://corsproxy.io/?${encodeURIComponent(`https://api.movidesk.com/public/v1/tickets?token=${token}&id=${requestId || ''}&now=${new Date().getTime()}`)}`;
+    const apiUrl = `https://status.omegaeducacional.com/api/proxy?url=${encodeURIComponent(`https://api.movidesk.com/public/v1/tickets?token=${token}&id=${requestId || ''}&now=${new Date().getTime()}`)}`;
+    //const apiUrl = `https://cors-anywhere.herokuapp.com/${`https://api.movidesk.com/public/v1/tickets?token=${token}&id=${requestId || ''}&now=${new Date().getTime()}`}`;
     
 
     // Função para fazer a requisição à API usando Axios
