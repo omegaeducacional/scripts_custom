@@ -477,6 +477,6 @@ function toTopBottomButton() {
         toTopBottomButton();
         loadBoardPlugin();
         changeTicketLinks();
-        exportCSV();
-    }, 150)
+        //exportCSV();
+    }, 250)
 })();
