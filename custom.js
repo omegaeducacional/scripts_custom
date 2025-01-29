@@ -187,10 +187,11 @@ function toTopBottomButton() {
                 <label for="commands_omega">Templates</label>
                 <select id="commands_omega">
                     <option value=''>Selecione um template</option>
-                    <optgroup label="Retornos">
+                    <optgroup label="Comentários">
                     <option value='/apply_template retorno_dev'>Retorno para qualidade (Web)</option>
                     <option value='/apply_template retorno_dev2'>Retorno para qualidade (Desktop)</option>
                     <option value='/apply_template homologacao_desktop'>Homologação (Desktop)</option>
+                    <option value='/apply_template notificacao_versao'>Notificação de envio de versão</option>
                     <optgroup label="Templates execução bot">
                     <option value='/create_branch feature'>Cria galho feature</option>
                     <option value='/create_branch hotfix'>Cria galho hotfix</option>
