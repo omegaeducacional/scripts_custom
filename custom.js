@@ -200,7 +200,30 @@ function toTopBottomButton() {
         `);
 
         $("body").on("change", "#commands_omega", function (e) {
-            addComment(this.value, true);
+            var text = this.value;
+            if (this.value.includes("notificacao_versao") {
+                text = `## Encaminhamento de versão do sistema
+
+* [ ] Geral
+* [ ] Cliente especifico:
+
+| Sistema | Versão |
+|---------|--------|
+|  |  |
+
+~"Published to client" 
+
+/label ~"Published to client"
+
+- Ao publicar a versão deverá ser executado as notificações nas aplicações:
+1. Central de atendimento Omega (movidesk);
+1. Notion: Preenchimento da data de entrega;
+1. RocketChat: Notificação de envio no grupo de homologações.
+
+
+                `;
+            }
+            addComment(text, true);
         });
     }
 
