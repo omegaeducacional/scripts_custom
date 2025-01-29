@@ -201,7 +201,7 @@ function toTopBottomButton() {
 
         $("body").on("change", "#commands_omega", function (e) {
             var text = this.value;
-            if (this.value.includes("notificacao_versao") {
+            if (this.value.includes("notificacao_versao")) {
                 text = `## Encaminhamento de versão do sistema
 
 * [ ] Geral
