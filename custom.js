@@ -470,13 +470,18 @@ function toTopBottomButton() {
       });
     });
 
-    
-    setTimeout(() => {
-        commandsTemplate();
-        //timerIssue();
-        toTopBottomButton();
-        loadBoardPlugin();
-        changeTicketLinks();
-        //exportCSV();
-    }, 250)
+    const checkAndExecute = () => {
+        if (typeof window.$ !== 'undefined') {
+            commandsTemplate();
+            //timerIssue();
+            toTopBottomButton();
+            loadBoardPlugin();
+            changeTicketLinks();
+            exportCSV();
+        } else {
+            setTimeout(checkAndExecute, 100); // Verifica a cada 100ms
+        }
+    };
+
+    checkAndExecute();
 })();
