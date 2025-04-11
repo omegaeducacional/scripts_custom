@@ -475,7 +475,7 @@ function toTopBottomButton() {
             commandsTemplate();
             //timerIssue();
             toTopBottomButton();
-            loadBoardPlugin();
+            //loadBoardPlugin();
             changeTicketLinks();
             exportCSV();
         } else {
