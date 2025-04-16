@@ -67,9 +67,11 @@ function addComment (text, check = false) {
     if (note.val().trim() !== "" && check) {
         if (confirm("Atenção, a caixa de comentário tem texto informado e será substituida, confirma?")) {
             note.val(text).change();
+            $('[data-testid="content_editor_editablebox"] .ProseMirror').html(text);
         }
     } else {
         note.val(text).change();
+        $('[data-testid="content_editor_editablebox"] .ProseMirror').html(text);
     }
 }
 
