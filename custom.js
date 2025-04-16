@@ -60,7 +60,7 @@ function addCSS(url) {
 }
 
 function addComment (text, check = false) {
-    const note = $("#note-body");
+    const note = $("#work-item-add-or-edit-comment");
     if (note.val().trim() !== "" && check) {
         if (confirm("Atenção, a caixa de comentário tem texto informado e será substituida, confirma?")) {
             note.val(text).change();
@@ -179,10 +179,37 @@ function toTopBottomButton() {
     }, 150);
 
     function commandsTemplate() {
-        if (window.$ === undefined) {
-            return;
-        }
-        $(".comment-warning-wrapper").before(`
+        const insertOmegaToolbar = () => {
+            if (window.$ === undefined) {
+                return;
+            }
+            const target = $(".comment-warning-wrapper");
+            if (target.length > 0 && $(".omg-issue-toolbar").length === 0) {
+                target.before(`
+                  <div class="omg-issue-toolbar">
+                    <label for="commands_omega">Templates</label>
+                    <select id="commands_omega">
+                      <option value=''>Selecione um template</option>
+                      <optgroup label="Comentários">
+                        <option value='/apply_template retorno_dev'>Retorno para qualidade (Web)</option>
+                        <option value='/apply_template retorno_dev2'>Retorno para qualidade (Desktop)</option>
+                        <option value='/apply_template homologacao_desktop'>Homologação (Desktop)</option>
+                        <option value='/apply_template notificacao_versao'>Notificação de envio de versão</option>
+                      </optgroup>
+                      <optgroup label="Templates execução bot">
+                        <option value='/create_branch feature'>Cria galho feature</option>
+                        <option value='/create_branch hotfix'>Cria galho hotfix</option>
+                      </optgroup>
+                    </select>
+                  </div>
+                `);
+                clearInterval(observer);
+            }
+        };
+        
+        const observer = setInterval(insertOmegaToolbar, 500);
+        
+        /*$(".comment-warning-wrapper").before(`
             <div class="omg-issue-toolbar">
                 <label for="commands_omega">Templates</label>
                 <select id="commands_omega">
@@ -197,7 +224,7 @@ function toTopBottomButton() {
                     <option value='/create_branch hotfix'>Cria galho hotfix</option>
                 </select>
             </div>
-        `);
+        `);*/
 
         $("body").on("change", "#commands_omega", function (e) {
             var text = this.value;
