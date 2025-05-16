@@ -62,7 +62,7 @@ function addCSS(url) {
 function addComment (text, check = false) {
     let note = $("#work-item-add-or-edit-comment");
     if (note.length === 0) {
-        note = $("note-body");
+        note = $("#note-body");
     }
     if (note.val().trim() !== "" && check) {
         if (confirm("Atenção, a caixa de comentário tem texto informado e será substituida, confirma?")) {
