@@ -37,7 +37,7 @@ function abrirPopup(id) {
         alert('ID inválido ou formato de URL não reconhecido.');
         return;
     }
-    const url = `https://omegaeducacional.github.io/scripts_custom/tickets/?id=${extractedId}&token=${window.TKT_TK}`;
+    const url = `https://movidesk-tickets.interno.omegasistemas.net.br/?id=${extractedId}`;
     const largura = 1200;
     const altura = 900;
 
